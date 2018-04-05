@@ -19,8 +19,11 @@
    (with-open [r (io/reader ".secrets.edn")]
     (edn/read (java.io.PushbackReader. r))))
   ;;take in story
+  (def storyaccess
+    (with-open [r (io/reader "stories.edn")]
+      (edn/read (java.io.PushbackReader. r))))
   ;;make api call
-  (def storycall (client/get (apply str "https://api.clubhouse.io/api/v2/stories/6236?token=" (access :token)) {:as :json}))
+  (def storycall (client/get (apply str "https://api.clubhouse.io/api/v2/stories/" (storyaccess :story-id) "?token=" (access :token)) {:as :json}))
   ;;parse/save call output to file
   (clojure.pprint/pprint storycall (clojure.java.io/writer "output.json"))
   ;;perform story calculations, output to csv for g-drive opening
@@ -33,5 +36,5 @@
   (def enddt (c/to-date-time endtime))
   (def duration (t/in-hours (t/interval startdt enddt)))
   (with-open [w (clojure.java.io/writer  "storydur.csv" :append true)]
-    (.write w (println-str duration (str "," (str "6236")))))
+    (.write w (println-str duration (apply str ", " (storyaccess :story-id)))))
   )
