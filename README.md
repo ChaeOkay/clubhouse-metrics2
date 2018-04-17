@@ -8,7 +8,11 @@ Download from http://example.com/FIXME.
 
 ## Usage
 
-FIXME: explanation
+Current Usage:
+- within clubhouse-metrics2.core namespace:
+- - lein repl
+- - (require '[clubhouse-metrics2.story-mapper :as smapper])
+- - (smapper/story AnyValidId) - try using 8022 for smaller story output
 
     $ java -jar clubhouse-metrics2-0.1.0-standalone.jar [args]
 
