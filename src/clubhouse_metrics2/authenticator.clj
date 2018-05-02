@@ -5,4 +5,3 @@
 
 (def configuration (:token (reader/readr ".secrets.edn")))
 
-(defn thisisnothing [])
