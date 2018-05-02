@@ -10,12 +10,16 @@
             [clubhouse-metrics2.caller :as caller]
             [clubhouse-metrics2.clubhouse :as clubhouse]))
 
-; 1. Get story function working in repl
-; 1.5 rename stuff to relevant actions
-; 2. Add duration in days to output (in addition to hours)
-
-
-(defn story [id]
+(defn story-body [id]
   "Given a clubhouse story id, return story data."
     (caller/get-url (clubhouse/story-url id)))
+
+(defn story-times [id]
+  "Given a story id, return its start and end time in hash map"
+  (hash-map
+    :start_time (c/to-date-time (get-in (story-body id) [:body :started_at])),
+    :end_time (c/to-date-time (get-in (story-body id) [:body :completed_at]))))
+
+(defn story-authors [id]
+  )
 
